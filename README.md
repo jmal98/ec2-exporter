@@ -19,7 +19,7 @@ The exporter makes use of the official Java sdk, and can be configured using a v
 
 You can deploy this exporter using the [jmal98/ec2-exporter](https://hub.docker.com/r/jmal98/ec2-exporter/) Docker image.
 
-For example if using an IAM profile:
+For example if using an IAM profile, you do not need to provide any environmental credentials:
 
 ```bash
 docker run -d -p 9385:9385 jmal98/ec2-exporter
@@ -28,5 +28,5 @@ docker run -d -p 9385:9385 jmal98/ec2-exporter
 For example if supplying environment configuration:
 
 ```bash
-docker run -d -p 9385:9385 -e AWS_ACCESS_KEY_ID=<access key> -e AWS_SECRET_ACCESS_KEY=<secret key> [other Java AWS SDK environment variables]  jmal98/ec2-exporter
+docker run -d -p 9385:9385 -e AWS_ACCESS_KEY_ID=<access key> -e AWS_SECRET_ACCESS_KEY=<secret key> -e AWS_REGION=<region> [other Java AWS SDK environment variables]  jmal98/ec2-exporter
 ```
