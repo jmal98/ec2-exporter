@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
+import org.jmal98.ec2.collectors.InstanceState;
 import org.jmal98.ec2.collectors.Volumes;
 
 import io.prometheus.client.Counter;
@@ -33,7 +34,8 @@ public class Application {
 	private void go() throws Exception {
 		DefaultExports.initialize();
 		new Volumes().register();
-
+		new InstanceState().register();
+		
 		Server server = new Server(9385);
 
 		ServletHandler handler = new ServletHandler();

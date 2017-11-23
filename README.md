@@ -1,7 +1,6 @@
 # Amazon Elastic Compute Cloud (EC2) Exporter
 
-A Prometheus exporter for Amazon EC2 metrics and conditions.  While there is the official Prometheus [Cloudwatch Exporter](https://github.com/prometheus/cloudwatch_exporter), 
-this exporter is a simplified version collecting a subset of the information from EC2 with additional details, while not incurring the cost of using the Cloudwatch API.
+A Prometheus exporter for Amazon EC2 metrics and conditions.  While the official Prometheus [Cloudwatch Exporter](https://github.com/prometheus/cloudwatch_exporter) is pretty good, this exporter is a scaled back version collecting a subset of the information from EC2 resource types, while not incurring the cost of using the Cloudwatch API.
 
 ### Build
 

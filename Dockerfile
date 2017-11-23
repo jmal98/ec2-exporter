@@ -16,7 +16,7 @@ RUN apk --update add --no-cache --virtual build-dependencies openjdk8 curl \
   && curl -SL -o /tmp/apache-maven-$MAVEN_VERSION-bin.tar.gz "https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz" \
   && echo -n "$MAVEN_SHA1  /tmp/apache-maven-$MAVEN_VERSION-bin.tar.gz" | sha1sum -c \
   && tar -xzvf /tmp/apache-maven-$MAVEN_VERSION-bin.tar.gz -C /tmp \
-  && /tmp/apache-maven-3.5.2/bin/mvn -f /tmp/pom.xml clean install -B \
+  && /tmp/apache-maven-$MAVEN_VERSION/bin/mvn -f /tmp/pom.xml clean install -B \
   && mv /tmp/target/exporter.jar /. \
   && chown exporter:exporter /exporter.jar \
   && rm -rf /tmp/* /root/.m2 \
