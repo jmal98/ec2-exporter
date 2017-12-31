@@ -17,17 +17,17 @@ import io.prometheus.client.Collector.MetricFamilySamples;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
 
-public class VolumesTest {
-
+public class InstanceHealthTest {
+	
 	private CollectorRegistry registry = CollectorRegistry.defaultRegistry;
 
-	private Volumes collector = new Volumes();
-
+	private InstanceHealth collector = new InstanceHealth();
+	
 	@BeforeClass
 	public static void setup() {
 		assumeTrue(Files.exists(Paths.get(System.getProperty("user.home"), ".aws", "credentials")));
 	}
-
+	
 	@Test
 	public void collect() throws IOException {
 
@@ -43,5 +43,6 @@ public class VolumesTest {
 		System.out.println(writer);
 
 	}
+
 
 }

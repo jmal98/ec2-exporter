@@ -41,22 +41,20 @@ public class InstanceState extends Collector {
 					logger.warn("Iterating to obtain more information");
 			}
 			
+			GaugeMetricFamily labeledGauge = new GaugeMetricFamily(
+					"ec2_instances",
+					"Instance details by state",
+					Arrays.asList("state")
+				);
 			Iterator<InstanceStateName> iterator = instancesByState.keySet().iterator();
 			while (iterator.hasNext()) {
 				InstanceStateName state = iterator.next();
 				Integer total = instancesByState.get(state);
 				
-				GaugeMetricFamily labeledGauge = new GaugeMetricFamily(
-						"ec2_instances",
-						"Total by state",
-						Arrays.asList("state")
-					);
-				
 				labeledGauge.addMetric(Arrays.asList(state.toString()),
 						Double.valueOf(total));
-				
-				mfs.add(labeledGauge);
 			}
+			mfs.add(labeledGauge);
 		} finally {}
 		
 		return mfs;

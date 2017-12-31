@@ -6,8 +6,10 @@ import javax.servlet.DispatcherType;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jetty.http.HttpGenerator;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
+import org.jmal98.ec2.collectors.InstanceHealth;
 import org.jmal98.ec2.collectors.InstanceState;
 import org.jmal98.ec2.collectors.Volumes;
 
@@ -35,11 +37,13 @@ public class Application {
 		DefaultExports.initialize();
 		new Volumes().register();
 		new InstanceState().register();
+		new InstanceHealth().register();
 		
 		Server server = new Server(9385);
 
 		ServletHandler handler = new ServletHandler();
 		server.setHandler(handler);
+		handler.addServletWithMapping(IndexServlet.class, "/");
 		handler.addServletWithMapping(MetricsServlet.class, "/metrics");
 		handler.addFilterWithMapping(DisableMethodsFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
 
@@ -47,6 +51,8 @@ public class Application {
 
 		logger.info("Exporter has started.");
 		startup.inc();
+		
+		HttpGenerator.setJettyVersion("");
 
 		server.join();
 

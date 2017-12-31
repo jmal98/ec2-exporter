@@ -6,6 +6,8 @@ import static org.junit.Assume.assumeTrue;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -23,8 +25,9 @@ public class InstanceStateTest {
 
 	@BeforeClass
 	public static void setup() {
-		assumeTrue(System.getenv("AWS_ACCESS_KEY_ID") != null);
+		assumeTrue(Files.exists(Paths.get(System.getProperty("user.home"), ".aws", "credentials")));
 	}
+
 
 	@Test
 	public void collect() throws IOException {

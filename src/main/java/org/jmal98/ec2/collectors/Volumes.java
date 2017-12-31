@@ -40,23 +40,20 @@ public class Volumes extends Collector {
 					logger.warn("Iterating to obtain more information");
 			}
 			
+			GaugeMetricFamily labeledGauge = new GaugeMetricFamily(
+					"ec2_ebs_volumes_allocated",
+					"EBS allocations in GBs",
+					Arrays.asList("type")
+				);
 			Iterator<VolumeType> iterator = volumesByTypeAndSize.keySet().iterator();
 			while (iterator.hasNext()) {
 				VolumeType vType = iterator.next();
 				Integer totalSize = volumesByTypeAndSize.get(vType);
 				
-				GaugeMetricFamily labeledGauge = new GaugeMetricFamily(
-						"ec2_ebs_volumes_allocated",
-						"Total by Type in GBs",
-						Arrays.asList("type")
-					);
-				
 				labeledGauge.addMetric(Arrays.asList(vType.toString()),
 						Double.valueOf(totalSize));
-				
-				mfs.add(labeledGauge);
 			}
-			
+			mfs.add(labeledGauge);			
 		} finally {}
 		
 		return mfs;
