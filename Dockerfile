@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.15.0
 
 RUN apk add --no-cache openjdk8-jre
 
@@ -7,7 +7,7 @@ ENV MAVEN_VERSION=3.5.4 \
 
 RUN addgroup -g 9232 -S exporter ; \
         adduser -D -S -u 9232 -G exporter exporter
-        
+
 ADD src /tmp/src
 
 ADD pom.xml /tmp/pom.xml
@@ -20,10 +20,11 @@ RUN apk --update add --no-cache --virtual build-dependencies openjdk8 curl \
   && mv /tmp/target/exporter.jar /. \
   && chown exporter:exporter /exporter.jar \
   && rm -rf /tmp/* /root/.m2 \
-  && apk del build-dependencies
+  && apk del build-dependencies \
+  && apk add --no-cache --virtual nss
 
 USER exporter
 
 EXPOSE 9385
 
-CMD ["java", "-Xmx512m", "-jar", "exporter.jar"]        
+CMD ["java", "-Xmx512m", "-jar", "exporter.jar"]
