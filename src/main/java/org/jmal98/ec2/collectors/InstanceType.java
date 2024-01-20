@@ -27,9 +27,9 @@ public class InstanceType extends Collector {
         }
 
         GaugeMetricFamily labeledGauge = new GaugeMetricFamily(
-                "ec2_instances_by_type",
-                "Instance details by type",
-                Collections.singletonList("state")
+                "ec2_instances_by_type_running",
+                "Instance details by type, filtered by running instances",
+                Collections.singletonList("type")
             );
         for (String name : instancesByType.keySet()) {
             Integer total = instancesByType.get(name);
@@ -64,6 +64,9 @@ public class InstanceType extends Collector {
 
             for (Reservation reservation : dir.getReservations()) {
                 for (Instance instance : reservation.getInstances()) {
+                    if(!instance.getState().getName().equals("running")) {
+                        continue;
+                    }
                     Integer cur = instancesByType.getOrDefault(instance.getInstanceType(), 0);
                     instancesByType.put(instance.getInstanceType(), cur + 1);
                 }
