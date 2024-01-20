@@ -27,8 +27,8 @@ public class InstanceType extends Collector {
         }
 
         GaugeMetricFamily labeledGauge = new GaugeMetricFamily(
-                "ec2_instances",
-                "Instance details by state",
+                "ec2_instances_by_type",
+                "Instance details by type",
                 Collections.singletonList("state")
             );
         for (String name : instancesByType.keySet()) {
