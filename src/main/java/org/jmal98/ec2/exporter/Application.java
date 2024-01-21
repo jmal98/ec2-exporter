@@ -11,6 +11,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.jmal98.ec2.collectors.InstanceHealth;
 import org.jmal98.ec2.collectors.InstanceState;
+import org.jmal98.ec2.collectors.InstanceType;
 import org.jmal98.ec2.collectors.Volumes;
 
 import io.prometheus.client.Counter;
@@ -38,7 +39,8 @@ public class Application {
 		new Volumes().register();
 		new InstanceState().register();
 		new InstanceHealth().register();
-		
+		new InstanceType().register();
+
 		Server server = new Server(9385);
 
 		ServletHandler handler = new ServletHandler();
@@ -51,7 +53,7 @@ public class Application {
 
 		logger.info("Exporter has started.");
 		startup.inc();
-		
+
 		HttpGenerator.setJettyVersion("");
 
 		server.join();
